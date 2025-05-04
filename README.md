@@ -22,6 +22,8 @@ To run the code, install the following dependencies:
 
 ## Running the Demo
 
+The uploaded version on the repo is a .py file as the .ipynb was too large.
+
 A Jupyter notebook / Google Colab version of this code is available for interactive testing and video playback in **Google Colab**. It includes:
 
 - Environment setup
