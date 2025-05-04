@@ -7,7 +7,7 @@ This repository contains the source code and training pipeline for robust autono
 
 ---
 
-## Installation
+## Installation (Though Colab link is recommended to run)
 
 To run the code, install the following dependencies:
 
@@ -22,7 +22,7 @@ To run the code, install the following dependencies:
 
 ## Running the Demo
 
-A Jupyter notebook version of this code is available for interactive testing and video playback in **Google Colab**. It includes:
+A Jupyter notebook / Google Colab version of this code is available for interactive testing and video playback in **Google Colab**. It includes:
 
 - Environment setup
 - Custom wrappers for safety, confidence, and skill abstraction
@@ -31,7 +31,7 @@ A Jupyter notebook version of this code is available for interactive testing and
 - Video rendering of evaluation episodes
 
 > **To run the notebook in Colab**:  
-> - Click [here](#) to open the notebook  
+> - Click [here](https://colab.research.google.com/drive/1fY-S9kfjXP3lDBQm3ibs5kNwXyZV5a9i?usp=sharing) to open the notebook  
 > - Execute all cells  
 > - Use `%tensorboard --logdir <path>` to visualize training progress
 
