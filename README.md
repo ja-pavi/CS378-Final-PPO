@@ -62,4 +62,49 @@ A Jupyter notebook / Google Colab version of this code is available for interact
 - **Intention Modeling**: Augment state space with inferred or synthetic vehicle intentions  
 - **Evaluation Tools**: Logs lane changes, crashes, reward, and average confidence per episode  
 - **Video Logging**: Save evaluation rollouts using `RecordVideo`  
-- **TensorBoard**: View real-time training metrics using `%tensorboard`  
+- **TensorBoard**: View real-time training metrics using `%tensorboard`
+
+---
+
+## How It Works
+
+Each experiment is launched using the `train_and_evaluate()` function, which takes the environment ID and toggles for noise, safety wrappers, and skill abstraction. The pipeline:
+
+1. **Creates a Gym environment** using `make_custom_env()` with optional noise, confidence, intention augmentation, and safety overrides.
+2. **Trains a PPO agent** using Stable-Baselines3 with a multi-layer perceptron policy and logs to TensorBoard.
+3. **Evaluates the trained policy** using a video recorder and statistics wrapper, including optional safety override wrappers during evaluation.
+4. **Logs episode metrics** like reward, lane changes, crash rate, and average confidence.
+
+---
+
+## Summary of Key Modules
+
+| Code Block / Class              | Description                                                                 |
+|--------------------------------|-----------------------------------------------------------------------------|
+| `SafePolicyWrapper`            | Overrides PPO actions if confidence is low; avoids risky behavior.         |
+| `SafeSkillPolicyWrapper`       | Does the same for skill-based policies, forcing conservative behavior.      |
+| `SkillEnv`                     | Converts high-level skill actions (like OVERTAKE) into low-level primitives.|
+| `NoisyObservationWrapper`      | Injects Gaussian noise into key vehicle features.                          |
+| `ConfidenceWrapper`            | Adds a confidence channel using feature variance.                          |
+| `IntentionWrapper`             | Appends a synthetic intention label based on lateral velocity.             |
+| `train_and_evaluate()`         | Trains and evaluates PPO models with logging and video rendering.          |
+
+---
+
+## Running a Configuration
+
+To run a specific variant (e.g., with noise + safety), call:
+
+```python
+train_and_evaluate(
+    env_id="highway-fast-v0",
+    model_name="ppo_noise_safe",
+    log_subdir="./ppo_logs/ppo_noise_safe/",
+    video_subdir="./ppo_videos/ppo_noise_safe/",
+    noise=True,
+    noise_level=0.5,
+    intention=False,
+    safe_policy=True,
+    skill_abstraction=False
+)
+
